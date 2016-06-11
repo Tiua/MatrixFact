@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Matrix Factorization Intro &mdash; MatrixFactorization 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="MatrixFactorization 1.0 documentation" href="#" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="matrix-factorization-intro">
+<h1>Matrix Factorization Intro<a class="headerlink" href="#matrix-factorization-intro" title="Permalink to this headline">¶</a></h1>
+<p>Seeking to find the most relevant items on the internet with little efforts has became increasingly popular in the last years. Recommender systems are bringing a contribution to this issue by using algorithms that will analyze the user data and give recommendations based on the results.</p>
+<p>Matrix factorization is one of the methods used in recommender systems, and is able to generate recommendations using the difference between the expected result and the actual one.</p>
+<p>In the next chapters, a more thorough analysis of the Matrix Factorization method will be presented, together with the algorithm implementation and a practical example.</p>
+</div>
+<div class="section" id="implementation-of-matrix-factorization">
+<h1>Implementation of Matrix Factorization<a class="headerlink" href="#implementation-of-matrix-factorization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="parameters-definition">
+<h2>Parameters definition<a class="headerlink" href="#parameters-definition" title="Permalink to this headline">¶</a></h2>
+<p>The programming language used for the implementation of algorithm is Python, version 3.5.
+(download page here: <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</p>
+<p>For performing the algorithm logic, we first need to define the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A matrix <em>R</em>, containing ratings from all users is defined and will be factorized;</li>
+<li><em>P</em> and <em>Q</em>, two matrices of which product need to be approximating R. The rows in the two matrices show he associations strength between the users, respecively items and features;</li>
+<li><em>K</em>, representing the number of latent features;</li>
+<li><em>alpha</em>, a constant indicating the rate of approaching to the minimum. A small value is recommended for alpha, so that small steps are taken towards the minimum;</li>
+<li><em>beta</em>, a regularization parameter that helps in avoiding overfitting. It is part of the algorithm extension implementation.</li>
+</ul>
+<p>Here is the main algorithm definition, containing all parameters mentioned above:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mat_fact</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>insert table here with real data set!</p>
+</div></blockquote>
+</div>
+<div class="section" id="finding-the-estimated-error">
+<h2>Finding the estimated error<a class="headerlink" href="#finding-the-estimated-error" title="Permalink to this headline">¶</a></h2>
+<p>Once a matrix containing all user information has been defined, we need to find the composition of <em>P</em> and <em>Q</em>, taking into account the latent features, <em>K</em></p>
+<blockquote>
+<div><ul>
+<li><p class="first">to begin with, the main matrix <em>R</em>, is searched at every iteration we make, so that only populated cells are taken into account:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                        <span class="k">if</span> <span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">the dot product of the arrays corresponding to <em>P</em> and <em>Q</em> is processed in the next step and the result is substracted from the original matrix:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">eij</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">Q</span><span class="p">[:,</span><span class="n">j</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="updating-rules-definition">
+<h2>Updating rules definition<a class="headerlink" href="#updating-rules-definition" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="extension-of-algorithm-regularization">
+<h2>Extension of algorithm: Regularization<a class="headerlink" href="#extension-of-algorithm-regularization" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="practical-demonstration">
+<h1>Practical Demonstration<a class="headerlink" href="#practical-demonstration" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Matrix Factorization Intro</a></li>
+<li><a class="reference internal" href="#implementation-of-matrix-factorization">Implementation of Matrix Factorization</a><ul>
+<li><a class="reference internal" href="#parameters-definition">Parameters definition</a></li>
+<li><a class="reference internal" href="#finding-the-estimated-error">Finding the estimated error</a></li>
+<li><a class="reference internal" href="#updating-rules-definition">Updating rules definition</a></li>
+<li><a class="reference internal" href="#extension-of-algorithm-regularization">Extension of algorithm: Regularization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#practical-demonstration">Practical Demonstration</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Teodora Caragea, Robert Stein.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
