@@ -4,7 +4,7 @@
 try:
     import numpy
 except:
-    print("This implementation requires the numpy module.")
+    print("Make sure you import numpy module for the implementation of the algorithm.")
     exit(0)
 
 ###############################################################################
@@ -12,9 +12,9 @@ except:
 """
 @INPUT:
     R     : a matrix to be factorized, dimension N x M. Contains all ratings obtained from all users so far
+    K     : the number of latent features
     P     : an initial matrix of dimension N x K. Each row will represent the strength of the associations between users and features
     Q     : an initial matrix of dimension M x K. Each row will represent the strength of the associations between items and features
-    K     : the number of latent features
     steps : the maximum number of steps taken to perform the optimisation
     alpha : a constant whose value determines the rate of approaching the minimum
     beta  : the regularization parameter to avoid overfitting. Addition to the original algorithm.
