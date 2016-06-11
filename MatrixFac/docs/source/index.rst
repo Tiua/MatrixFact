@@ -86,7 +86,7 @@ Indices and tables
 ==================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    help
 * :ref:`genindex`
