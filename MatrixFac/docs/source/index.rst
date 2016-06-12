@@ -20,7 +20,7 @@ Parameters definition
 For performing the algorithm logic, we first need to define the following parameters: 
 
 	* A matrix *R*, containing ratings from all users is defined and will be factorized;
-	* *P* and *Q*, two matrices of which product need to be approximating R. The rows in the two matrices show he associations strength between the users, respecively items and features;
+	* *P* and *Q*, two matrices of which product need to be approximating R. The rows in the two matrices show the associations strength between the users, respecively items and features;
 	* *K*, representing the number of latent features;
 	* *alpha*, a constant indicating the rate of approaching to the minimum. A small value is recommended for alpha, so that small steps are taken towards the minimum;
 	* *beta*, a regularization parameter that helps in avoiding overfitting. It is part of the algorithm extension implementation.
@@ -29,8 +29,6 @@ For performing the algorithm logic, we first need to define the following parame
 
 		def mat_fact(R, P, Q, K, steps=5000, alpha=0.0002, beta=0.02)
 	
-	insert table here with real data set!
-
 Finding the estimated error
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Once a matrix containing all user information has been defined, we need to find the composition of *P* and *Q*, taking into account the latent features, *K*
@@ -76,10 +74,6 @@ For this purpose, a beta parameter is introduced for regularizing the increased 
 
 
 By adding *beta* to the original updating rules, we avoid obtaining large numbers when approximating *R*. 
-
-Practical Demonstration     
-=======================
-Contents:
 
 
 Indices and tables
