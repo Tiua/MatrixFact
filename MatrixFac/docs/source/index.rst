@@ -49,7 +49,7 @@ By performing these computations, we obtain the error between the estimated rati
 Updating rules definition
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To make sure we are performing the iterations in the correct direction towards the minimum, we need to find the gradient of *p\ :sub:`ik`\* and *q\ :sub:`kj`\*. Knowing the gradient, and the constant *alpha* value, we will formulate the update rules for p\ :sub:`ik`\  and  q\ :sub:`kj`::
+To make sure we are performing the iterations in the correct direction towards the minimum, we need to find the gradient of p\ :sub:`ik`\ and q\ :sub:`kj`\. Knowing the gradient, and the constant *alpha* value, we will formulate the update rules for p\ :sub:`ik`\  and  q\ :sub:`kj`::
 
 	for k in range(K): 
         P[i][k] = P[i][k] + alpha * (2 * eij * Q[k][j] - beta * P[i][k])
